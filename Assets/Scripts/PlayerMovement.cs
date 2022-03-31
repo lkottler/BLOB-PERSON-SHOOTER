@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
         // Crouching
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire2"))
         {
             if (controller.height > standardHeight * crouchHeightPercent)
                 controller.height -= Time.deltaTime * crouchSpeed;
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         cylinder.localPosition = new Vector3(0f, -(3.9f - controller.height) / 2, 0f);
 
         // Sprinting
-        if (!Input.GetButton("Fire1") && Input.GetButton("Fire3"))
+        if (!Input.GetButton("Fire2") && Input.GetButton("Fire3"))
         {
             move *= sprintMultiplier;
         }
