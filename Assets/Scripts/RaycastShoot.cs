@@ -13,6 +13,7 @@ public class RaycastShoot : MonoBehaviour
     private Camera fpsCam;
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     private AudioSource gunAudio;
+    private AudioClip shotClip;
     private LineRenderer laserLine;
     private float nextFire;
 
@@ -22,6 +23,10 @@ public class RaycastShoot : MonoBehaviour
     {
         laserLine = GetComponent<LineRenderer>();
         gunAudio = GetComponent<AudioSource>();
+
+        // used to overlap sounds
+        shotClip = gunAudio.clip;
+
         fpsCam = GetComponentInParent<Camera>();
     }
 
@@ -58,7 +63,6 @@ public class RaycastShoot : MonoBehaviour
             }
             else
             {
-                Debug.Log("miss");
                 laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward) * weaponRange);
             }
         }
@@ -66,7 +70,9 @@ public class RaycastShoot : MonoBehaviour
 
     private IEnumerator ShotEffect()
     {
-        gunAudio.Play();
+        //gunAudio.Play();
+
+        gunAudio.PlayOneShot(shotClip);
 
         laserLine.enabled = true;
 
