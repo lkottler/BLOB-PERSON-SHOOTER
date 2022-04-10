@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Reel : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class Reel : MonoBehaviour
                 image.transform.position.x,
                 parts[rand] + transform.parent.GetComponent<RectTransform>().transform.position.y,
                 image.transform.position.z);
+            Debug.Log(image.GetComponentInParent<Image>().color);
 
             parts.RemoveAt(rand);
         }
