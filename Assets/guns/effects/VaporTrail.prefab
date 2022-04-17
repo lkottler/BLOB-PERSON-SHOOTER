@@ -172,4 +172,4 @@ MonoBehaviour:
   color: {r: 0.48235297, g: 0.48235297, b: 0.48235297, a: 1}
   width: 0.1
   endWidth: 0.2
-  speed: 1
+  speed: 2

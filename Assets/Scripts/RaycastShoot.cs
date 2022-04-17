@@ -8,10 +8,13 @@ public class RaycastShoot : MonoBehaviour
     public float fireRate = 0.25f;
     public float weaponRange = 500f;
     public float hitForce = 100f;
+    public float spreadAmount = 5f;
     public Transform gunEnd;
+    private Quaternion shotAcc;
+
 
     private Camera fpsCam;
-    private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
+    private WaitForSeconds shotDuration = new WaitForSeconds(0.05f);
     private AudioSource gunAudio;
     private AudioClip shotClip;
     private LineRenderer laserLine;
@@ -19,10 +22,14 @@ public class RaycastShoot : MonoBehaviour
 
     [Header("FX")]
     public GameObject flashEffect;
-    //public GameObject flashPosition;
     //public GameObject impactBlood;
     public LineRenderer bulletTrail;
-    public ParticleSystem muzzleFlashParticle;
+    public ParticleSystem muzzleFlashParticle1;
+    public ParticleSystem muzzleFlashParticle2;
+    public ParticleSystem muzzleFlashParticle3;
+    public ParticleSystem muzzleFlashParticle4;
+    public ParticleSystem muzzleFlashParticle5;
+    public ParticleSystem muzzleFlashParticle6;
 
     [Header("Sound Effects")]
     public GameObject fireSoundSource;
@@ -43,7 +50,7 @@ public class RaycastShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && Time.time > nextFire) //the gun fires
+        if (Input.GetButton("Fire1") && Time.time > nextFire) //the gun fires
         {
             
             
@@ -60,7 +67,8 @@ public class RaycastShoot : MonoBehaviour
             if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
             {
                 laserLine.SetPosition(1, hit.point);
-                SpawnBulletTrail(hit.point);   // spawns bullet trail
+                
+                SpawnBulletTrail(hit.point);   // spawns bullet vapor trail
                 Shootable health = hit.collider.GetComponent<Shootable>();
 
                 if (health != null)
@@ -84,14 +92,19 @@ public class RaycastShoot : MonoBehaviour
 
     private IEnumerator ShotEffect()
     {
-        //gunAudio.Play();
+        //gunAudio.Play(); //removed because of SpawnFireSound
         //gunAudio.PlayOneShot(shotClip);
 
-        SpawnMuzzleLight();
+        muzzleFlashParticle1.Emit(1); // shows muzzle flash particle
+        muzzleFlashParticle2.Emit(1);
+        muzzleFlashParticle3.Emit(1);
+        muzzleFlashParticle4.Emit(1);
+        muzzleFlashParticle5.Emit(1);
+        muzzleFlashParticle6.Emit(1);
 
-        muzzleFlashParticle.Emit(1); // show muzzle flash
+        SpawnMuzzleLight(); //spawns a light in the game world
 
-        SpawnFireSound();
+        SpawnFireSound(); //spawns an object in the game  world that makes a noise
 
         laserLine.enabled = true;
 
@@ -103,7 +116,7 @@ public class RaycastShoot : MonoBehaviour
 
     private void SpawnFireSound()
     {
-        GameObject fireSound = Instantiate(fireSoundSource, gunEnd);
+        GameObject fireSound = Instantiate(fireSoundSource, gunEnd.position, gunEnd.rotation);
     }
     private void SpawnMuzzleLight()
     {
@@ -111,13 +124,14 @@ public class RaycastShoot : MonoBehaviour
         Destroy(flashLight, 0.05f); //Should this really be destroyed here? what if this person dies right when the flash is spawned, then it will exist forever.
     }
 
-        private void SpawnBulletTrail(Vector3 hitPoint)
+    private void SpawnBulletTrail(Vector3 hitPoint)
     {
         GameObject bulletTrailEffect = Instantiate(bulletTrail.gameObject, gunEnd.position, gunEnd.transform.rotation); // what does quaternion identity do? how is it linked to the bullet path?
 
         LineRenderer lineR = bulletTrailEffect.GetComponent<LineRenderer>();
 
         lineR.SetPosition(0, gunEnd.position);
+        //LineR.SetPosition(1, gunEnd.position)
         lineR.SetPosition(1, hitPoint);
 
         Destroy(bulletTrailEffect, 3f);
