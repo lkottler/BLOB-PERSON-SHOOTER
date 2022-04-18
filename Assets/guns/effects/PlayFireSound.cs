@@ -9,7 +9,7 @@ public class PlayFireSound : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        fireSound.pitch = Random.Range(0.75f, 1.4f);
+        fireSound.pitch = Random.Range(0.85f, 1.2f);
         fireSound.Play(); //play sound effect
         Destroy(gameObject, 0.8f);
     }
