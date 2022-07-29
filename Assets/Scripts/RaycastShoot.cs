@@ -74,7 +74,7 @@ public class RaycastShoot : MonoBehaviour
                 if (health != null)
                 {
                     health.Damage(gunDamage);
-                    //SpawnBloodMist(hit); // spawns blood mist on target
+                    SpawnBloodMist(hit); // spawns blood mist on target
                 }
 
                 if (hit.rigidbody != null)
@@ -137,13 +137,13 @@ public class RaycastShoot : MonoBehaviour
         Destroy(bulletTrailEffect, 3f);
     }
 
-    /*
+    
     private void SpawnBloodMist(RaycastHit hitPoint)
     {
         GameObject effect = Instantiate(impactBlood, hitPoint.point + hitPoint.point.normalized*6, gunEnd.);
     }
 
-    */
+    
 
 
 
