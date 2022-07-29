@@ -8,6 +8,7 @@ public class Shootable : MonoBehaviour
     public int currentHealth = 3;
     public void Damage(int dmgAmount)
     {
+
         currentHealth -= dmgAmount;
 
         if (currentHealth <= 0)

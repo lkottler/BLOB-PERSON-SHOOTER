@@ -10,10 +10,13 @@ public class RaycastShoot : MonoBehaviour
     public float hitForce = 100f;
     public float spreadAmount = 5f;
     public Transform gunEnd;
+    public float recoil = 0f,
+                 recoilSpeed = 10f,
+                 maxRecoil_x = -20f;
     private Quaternion shotAcc;
 
 
-    private Camera fpsCam;
+    public Camera fpsCam;
     private WaitForSeconds shotDuration = new WaitForSeconds(0.05f);
     private AudioSource gunAudio;
     private AudioClip shotClip;
@@ -34,17 +37,19 @@ public class RaycastShoot : MonoBehaviour
     [Header("Sound Effects")]
     public GameObject fireSoundSource;
 
+    private Recoil Recoil_Script;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        laserLine = GetComponent<LineRenderer>();
+        laserLine = GetComponentInChildren<LineRenderer>();
         //gunAudio = GetComponent<AudioSource>();
 
         // used to overlap sounds
         //shotClip = gunAudio.clip;
-
-        fpsCam = GetComponentInParent<Camera>();
+        fpsCam = GetComponentInChildren<Camera>();
+        Recoil_Script = transform.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
     }
 
     // Update is called once per frame
@@ -52,42 +57,42 @@ public class RaycastShoot : MonoBehaviour
     {
         if (Input.GetButton("Fire1") && Time.time > nextFire) //the gun fires
         {
-            
-            
-            nextFire = Time.time + fireRate;
-
-            StartCoroutine(ShotEffect());
-
-            Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
-
-            RaycastHit hit;
-
-            laserLine.SetPosition(0, gunEnd.position);
-
-            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
-            {
-                laserLine.SetPosition(1, hit.point);
-                
-                SpawnBulletTrail(hit.point);   // spawns bullet vapor trail
-                Shootable health = hit.collider.GetComponent<Shootable>();
-
-                if (health != null)
-                {
-                    health.Damage(gunDamage);
-                    SpawnBloodMist(hit); // spawns blood mist on target
-                }
-
-                if (hit.rigidbody != null)
-                {
-                    hit.rigidbody.AddForce(-hit.normal * hitForce);
-                }
-
-            }
-            else
-            {
-                laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward) * weaponRange);
-            }
+            Shoot();
         }
+    }
+
+    public void Shoot()
+    {
+        nextFire = Time.time + fireRate;
+        StartCoroutine(ShotEffect());
+        Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        RaycastHit hit;
+        laserLine.SetPosition(0, gunEnd.position);
+        if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+        {
+            laserLine.SetPosition(1, hit.point);
+
+            SpawnBulletTrail(hit.point);   // spawns bullet vapor trail
+            Shootable health = hit.collider.GetComponent<Shootable>();
+
+            if (health != null)
+            {
+                health.Damage(gunDamage);
+                SpawnBloodMist(hit); // spawns blood mist on target
+            }
+
+            if (hit.rigidbody != null)
+            {
+                hit.rigidbody.AddForce(-hit.normal * hitForce);
+            }
+
+        }
+        else
+        {
+            laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward) * weaponRange);
+        }
+
+        Recoil_Script.RecoilFire();
     }
 
     private IEnumerator ShotEffect()
@@ -140,17 +145,6 @@ public class RaycastShoot : MonoBehaviour
     
     private void SpawnBloodMist(RaycastHit hitPoint)
     {
-        GameObject effect = Instantiate(impactBlood, hitPoint.point + hitPoint.point.normalized*6, gunEnd.);
+        //GameObject effect = Instantiate(impactBlood, hitPoint.point + hitPoint.point.normalized*6, gunEnd.);
     }
-
-    
-
-
-
-
-
-
-    
-
-    
 }

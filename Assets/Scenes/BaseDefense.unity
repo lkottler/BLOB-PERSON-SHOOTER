@@ -178,8 +178,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8039812462235285410, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4046348671185038686, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+--- !u!198 &60022397 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8039812460500621376, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &81840907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,6 +255,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dfa9f93e62ca0f45bd87d8959722808, type: 3}
+--- !u!198 &149168076 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8039812460500621390, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &161883575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8039812461204641525, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &161883579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161883575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f9e04dad8a6774fb32c1dbfb4cfddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunDamage: 1
+  fireRate: 0.08
+  weaponRange: 500
+  hitForce: 100
+  spreadAmount: 5
+  gunEnd: {fileID: 723620759}
+  recoil: 0
+  recoilSpeed: 10
+  maxRecoil_x: -20
+  fpsCam: {fileID: 0}
+  flashEffect: {fileID: 1494290791805118199, guid: 67271d35b635c6f4183a124cf5e88a95, type: 3}
+  bulletTrail: {fileID: 9123037622176290014, guid: 6eda8a222a57fcb44a09f3f4ef250b9c, type: 3}
+  muzzleFlashParticle1: {fileID: 60022397}
+  muzzleFlashParticle2: {fileID: 1384816484}
+  muzzleFlashParticle3: {fileID: 149168076}
+  muzzleFlashParticle4: {fileID: 1662409692}
+  muzzleFlashParticle5: {fileID: 1924955988}
+  muzzleFlashParticle6: {fileID: 1373852198}
+  fireSoundSource: {fileID: 7852677822722595741, guid: e1f58f873eeec864b90a0876cb4d4fd1, type: 3}
 --- !u!1 &183780065
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +459,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4485fa50187568145ad9d824b0c6ff94, type: 3}
+--- !u!4 &723620759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8039812461964595036, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &849775025
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +561,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &1373852198 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8039812460500621380, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1384816484 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8039812460500621382, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1522125952
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +734,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dfa9f93e62ca0f45bd87d8959722808, type: 3}
+--- !u!198 &1662409692 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8039812460500621378, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1888941462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -733,3 +804,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dfa9f93e62ca0f45bd87d8959722808, type: 3}
+--- !u!198 &1924955988 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8039812460500621388, guid: 37e09fc1c6b297f40b760bd68634a1c0, type: 3}
+  m_PrefabInstance: {fileID: 11221356}
+  m_PrefabAsset: {fileID: 0}
