@@ -22,6 +22,7 @@ public class RaycastShoot : MonoBehaviour
     private AudioClip shotClip;
     private LineRenderer laserLine;
     private float nextFire;
+    private float resetSpray = 0.8f;
 
     [Header("FX")]
     public GameObject flashEffect;
@@ -48,7 +49,6 @@ public class RaycastShoot : MonoBehaviour
 
         // used to overlap sounds
         //shotClip = gunAudio.clip;
-        fpsCam = GetComponentInChildren<Camera>();
         Recoil_Script = transform.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
     }
 
