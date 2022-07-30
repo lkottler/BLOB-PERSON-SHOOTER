@@ -25,6 +25,7 @@ public class RaycastShoot : MonoBehaviour
     private float resetSpray = 0.8f;
 
     [Header("FX")]
+    public GameObject bulletHole;
     public GameObject flashEffect;
     //public GameObject impactBlood;
     public LineRenderer bulletTrail;
@@ -49,7 +50,7 @@ public class RaycastShoot : MonoBehaviour
 
         // used to overlap sounds
         //shotClip = gunAudio.clip;
-        Recoil_Script = transform.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
+        Recoil_Script = transform.Find("CameraRot/GunRecoil").GetComponent<Recoil>();
     }
 
     // Update is called once per frame
@@ -84,6 +85,13 @@ public class RaycastShoot : MonoBehaviour
             if (hit.rigidbody != null)
             {
                 hit.rigidbody.AddForce(-hit.normal * hitForce);
+            }
+            else
+            {
+                Instantiate(
+                    bulletHole,
+                    hit.point + (hit.normal * 0.01f),
+                    Quaternion.FromToRotation(Vector3.up, hit.normal));
             }
 
         }
