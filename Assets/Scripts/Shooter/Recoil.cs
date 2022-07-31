@@ -7,6 +7,10 @@ public class Recoil : MonoBehaviour
     private Vector3 currentRotation;
     private Vector3 targetRotation;
 
+    //Position
+    private Vector3 currentKick;
+    private Vector3 targetKick;
+
     private Vector3 cameraCurrent;
     private Vector3 cameraTarget;
 
@@ -15,13 +19,16 @@ public class Recoil : MonoBehaviour
     private float recoilX,
                   recoilY,
                   recoilZ,
+                  accuracy,
                   spreadRate;
 
     //Settings
     [SerializeField]
     private float snappiness,
                   returnspeed,
-                  patternResetSeconds;
+                  patternResetSeconds,
+                  kickback,
+                  kickRecovery;
 
     private WaitForSeconds patternResetDuration = new WaitForSeconds(0.1f);
     private int shotCount = 0;
@@ -47,18 +54,26 @@ public class Recoil : MonoBehaviour
         targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnspeed * Time.deltaTime);
         currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
 
+        targetKick = Vector3.Lerp(targetKick, Vector3.zero, returnspeed * Time.deltaTime);
+        currentKick = Vector3.Slerp(currentKick, targetKick, kickRecovery * Time.fixedDeltaTime);
+
         cameraTarget = Vector3.Lerp(Vector3.Scale(targetRotation, cameraReduction), Vector3.zero, cameraSpeed * Time.deltaTime);
         cameraCurrent = Vector3.Slerp(cameraCurrent, cameraTarget, snappiness * cameraSnap * Time.fixedDeltaTime);
 
         transform.localRotation = Quaternion.Euler(currentRotation);
         CameraRecoil.localRotation = Quaternion.Euler(cameraCurrent);
+        transform.localPosition = currentKick;
     }
 
     public void RecoilFire()
     {
         shotCount++;
-        Vector3 bulletRecoil = new Vector3(recoilX * Random.Range(0.8f, 1.2f), recoilY * Mathf.Sin(Mathf.Pow(shotCount, 1.5f) *  spreadRate), recoilZ * Mathf.Sin((shotCount * spreadRate)));
+        Vector3 bulletRecoil = new Vector3(recoilX * Random.Range(accuracy, 2-accuracy),
+            recoilY * Mathf.Sin(Mathf.Pow(shotCount, 1.5f) *  spreadRate) * Random.Range(accuracy, 2 - accuracy),
+            recoilZ * Mathf.Sin((shotCount * spreadRate)) * Random.Range(accuracy, 2 - accuracy));
+        Vector3 bulletKick = new Vector3(0, 0, -kickback);
         targetRotation += bulletRecoil;
+        targetKick += bulletKick;
         shotTime = Time.time;
     }
 
